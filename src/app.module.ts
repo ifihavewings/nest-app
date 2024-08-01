@@ -4,15 +4,28 @@ import { AppService } from './app.service';
 import { UploadModule } from './upload/upload.module';
 import { ConfigModule } from '@nestjs/config';
 import { CoffeeModule } from './coffee/coffee.module';
+import { UsersModule } from './users/users.module';
 import configuration from './config/configuration';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import {User} from "./users/entities/user.entity"
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
     }),
-    UploadModule,
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'root',
+      database: 'user',
+      entities: [User],
+      synchronize: true, // 仅用于开发环境
+    }),    UploadModule,
     CoffeeModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
