@@ -7,7 +7,6 @@ import { CoffeeModule } from './coffee/coffee.module';
 import { UsersModule } from './users/users.module';
 import configuration from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import {User} from "./users/entities/user.entity"
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -21,7 +20,7 @@ import {User} from "./users/entities/user.entity"
       username: 'root',
       password: 'root',
       database: 'user',
-      entities: [User],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true, // 仅用于开发环境
     }),    UploadModule,
     CoffeeModule,

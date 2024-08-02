@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsEnum, IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class CreateUserDto {
@@ -33,11 +33,13 @@ export class CreateUserDto {
   @Transform(({ value }) => value, { toClassOnly: true })
   gender: 'male' | 'female' | 'other';
 
-  @ApiProperty({ description: 'The level of the user', default: 1 })
+  @ApiProperty({ description: 'The level of the user', default: 1, required: false })
+  @IsOptional()
   @Transform(({ value }) => value, { toClassOnly: true })
-  level?: number;
+  level: number;
 
-  @ApiProperty({ description: 'Is the user deactivated', default: false })
+  @ApiProperty({ description: 'Is the user deactivated', default: false, required: false })
+  @IsOptional()
   @Transform(({ value }) => value, { toClassOnly: true })
-  deactivated?: boolean;
+  deactivated: boolean;
 }
